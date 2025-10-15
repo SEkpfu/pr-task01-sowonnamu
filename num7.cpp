@@ -1,25 +1,39 @@
 #include <iostream>
 using namespace std;
 
+
+void inputWorkerData (double &hours, double &payment, int i)
+{
+    cout << "Hour worked" << i;
+    cin >> hours;
+    cout << "Hour payment" << i;
+    cin >> payment;
+}
+
+double calcculateWorkerData (double hours, double payment)
+{
+    double sum = hours * payment;
+    return sum;
+}
+
+
+
 int main ()
 {
-    float totalSum = 0;
+    double totalSum = 0.0;
 
-    for (int i = 1; i < 6; i++)
+    for (int i = 1; i <= 5; i++)
     {
-        float hours, payment;
+        double hours, payment, sum;
 
-        cout << "Hours worked for worker " << i << " ";
-        cin >> hours;
-        cout << "Hourly payment for worker " << i << " ";
-        cin >> payment;
+        inputWorkerData(hours, payment, i);
         
-        float sum = hours*payment;
+        sum = calcculateWorkerData(hours, payment);
         totalSum += sum;
 
-        cout << "Worker " << i << " earned: " << sum << endl;
+        cout << "Worker " << i << " earned " << sum << endl;
     }
-    cout << "Salary medium: " << totalSum/5.0;
+    cout << "Salary medium of 5 workers: " << totalSum/5.0;
 
     return 0;
 }

@@ -1,31 +1,31 @@
 #include <iostream>
 using namespace std;
 
-float getTotalSum(float hours, float payment, float premium)
+double getTotalSum(double hours, double payment, double premium)
 {
-    float earnedSum = hours * payment;
-    float earnedSumWithPremium = earnedSum + (earnedSum * premium) / 100.0;
+    double earnedSum = hours * payment;
+    double earnedSumWithPremium = earnedSum + (earnedSum * premium) / 100.0;
 
     return earnedSumWithPremium;
 }
 
-float getIncomeTax(float salary)
+double getIncomeTax(double salary)
 {
-    float incomeTax = (salary * 13) / 100.0;
+    double incomeTax = (salary * 13) / 100.0;
     return incomeTax;
 }
 
-float getRealSalary(float salary) 
+double getRealSalary(double salary) 
 {
-    float incomeTax = getIncomeTax(salary);
-    float realSalary = salary - incomeTax;
+    double incomeTax = getIncomeTax(salary);
+    double realSalary = salary - incomeTax;
 
     return realSalary;
 }
 
 int main()
 {
-    float hoursWorked, hourlyPayment, premiumPercentage;
+    double hoursWorked, hourlyPayment, premiumPercentage;
 
     cout << "Hours work: ";
     cin >> hoursWorked;
@@ -36,9 +36,9 @@ int main()
     cout << "Percent of premium: "; 
     cin >> premiumPercentage;
 
-    float totalSum = getTotalSum(hoursWorked, hourlyPayment, premiumPercentage);
-    float incomeTax = getIncomeTax(totalSum);
-    float realSalary = getRealSalary(totalSum);
+    double totalSum = getTotalSum(hoursWorked, hourlyPayment, premiumPercentage);
+    double incomeTax = getIncomeTax(totalSum);
+    double realSalary = getRealSalary(totalSum);
     
     cout << "earned: " << totalSum << endl;
     cout << "income tax: " << incomeTax << endl; 

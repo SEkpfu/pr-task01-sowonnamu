@@ -1,54 +1,60 @@
-#include <iostream>
-#include <windows.h>
-#include <string>
+#include<iostream>
+#include <vector>
+#include<string>
+
+
 using namespace std;
-
-int min(double q[],int size){
-    double x=9999999999999999;
-    int index;
-    for (int i=0;i<5;i++){
-        if (q[i]<x){
-            x=q[i];
-            index=i;
-        }
-    }
-    return index+1;
+int min_el(int n, vector<int> v) {
+	int mi = v[0], nomer =0;
+	for (int i = 0; i < n; ++i) {
+		if (mi > v[i]) {
+			mi = v[i];
+			nomer = i + 1;
+		}
+	}
+	return nomer;
+ }
+string max_el(int n, vector<int> v) {
+	int ma = v[0], nomer;
+	for (int i = 0; i < n; ++i) {
+		if (ma < v[i]) {
+			ma = v[i];
+			nomer = i + 1;
+		}
+	}
+	return to_string(ma) + " " + to_string(nomer);
 }
-
-double max(double q[5],int size){
-    double max=0;
-       for (int i=0;i<5;i++){
-        if (q[i]>max){
-            max=q[i];
-        }
-    }
-    return max;
+int svoi_el(int n, vector<int> v, int el) {
+	int kolvo =0;
+	for (int i = 0; i < n; ++i) {
+		if (v[i] > el)
+			kolvo += 1;
+	}
+	return kolvo;
 }
-
-double maxnumber(double q[],int size){
-    double max=0;
-    int NumMax;
-    for (int i=0;i<5;i++){
-        if (q[i]>max){
-            max=q[i];
-            NumMax=i;
-        }
-    }
-    return NumMax+1;
+int summ(int n, vector<int> v) {
+	int su = 0;
+	for (int i = 0; i < n; ++i)
+		su += v[i];
+	return su;
 }
+int main() {
+	int el, n;
+	cout << "Введите количество элементов." << endl;
+	cin >> n;
+	vector<int> v(n);
+	cout << "Введите элементы массива." << endl;
+	for (int i = 0; i < n; ++i) {
+		cin >> el;
+		v[i] = el;
+	}
+	cout << "Введите свой элемент для сравнения." << endl;
+	cin >> el;
+	cout << "номер min el " << min_el(n, v) << endl << "max el и номер" << max_el(n, v) << endl;
+	cout << "больше своего числа " << svoi_el(n, v, el) << endl << "сумма " << summ(n, v);
 
-int elem(double q[],int size,int num){
-    int f=0;
-    int count = sizeof(q) / sizeof(q[0]); 
-    for (int k=0;k<count;k++){
-        if (q[k]>num){
-            f=f+1;
-        }
 
-    }
-    return f;
-}
 
-int main(){
-    return 0;
+
+	return 0;
 }

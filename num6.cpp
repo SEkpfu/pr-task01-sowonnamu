@@ -1,78 +1,45 @@
-#include <iostream>
-#include <cstring>
-
+#include<iostream>
 using namespace std;
 
-string inputWorkersLastname()
-{       
-    string lastname;
-    
-    do {
-        cout << "Worker lastname: ";
-        cin >> lastname;
-        if (lastname.length() > 20) {
-            cout << "Error, lastname length must be less than 21!\n";
-        }
-    } while (lastname.length() > 20);
-    
-    return lastname;
+
+void vvod(int& h, int& st, double& pr, double& n_st, string&f) {
+	cout << "Введите фамилию." << endl;
+	cin >> f;
+	cout << "Введите данные: часы, ставка, премия, процент налога." << endl;
+	cin >> h >> st >> pr >> n_st;
 }
+double zp(int h, int st, double pr){
+	int ob_zp = h * st;
+	return ob_zp + (ob_zp * pr/100);
+}
+double nalog(double zp_b, double n_st) {
+	return n_st / 100 * zp_b;
+ }
+double na_ruki(int h, int st, double pr, double n_st) {
+	double zp_bez_nal = zp(h, st, pr);
+	return zp_bez_nal - nalog(zp_bez_nal, n_st);
+}
+int main() {
+	string f1, f2;
+	int h1, st1, h2, st2;
+	double pr, zp1, zp2, n_st, nal1, nal2;
+	vvod(h1, st1, pr, n_st, f1);
+	zp1 = na_ruki(h1, st1, pr, n_st);
+	nal1 = nalog(zp(h1, st1, pr), n_st); 
+	vvod(h2, st2, pr, n_st, f2);
+	zp2 = na_ruki(h2, st2, pr, n_st);
+	nal2 = nalog(zp(h2, st2, pr), n_st);
+	if (zp1 < 1000) 
+		cout << f1 << endl;
+	if (zp2 < 1000)
+		cout << f2 << endl;
+	if (nal1 >  50)
+		cout << f1[0] << "-" << f1[f1.size() - 1] << endl;
+	if (nal2 > 50)
+		cout << f2[0] << "-" << f2[f2.size() - 1] << endl;
 
-int main ()
-{
-    float hours1, hours2, payment1, payment2, sum1, sum2, tax1, tax2;
-    
-    string lastname1 = inputWorkersLastname();
-    cout << lastname1 << "`s hours worked: ";
-    cin >> hours1;
-    cout << lastname1 << "`s hourly payment: ";
-    cin >> payment1;
 
-    string lastname2 = inputWorkersLastname();
-    cout << lastname2 << "`s hours worked: ";
-    cin >> hours2;
-    cout << lastname2 << "`s hourly payment: ";
-    cin >> payment2;
 
-    sum1 = hours1*payment1;
-    tax1 = (sum1*13)/100.0;
-    float real1 = sum1 - tax1;
-    
-    sum2 = hours2*payment2;
-    tax2 = (sum2*13)/100.0;
-    float real2 = sum2 - tax2;
 
-    bool foundLess1000 = false;
-    if (real1 < 1000) 
-    {
-        cout << lastname1 << " earned less than 1000\n";
-        foundLess1000 = true;
-    }
-    if (real2 < 1000) 
-    {
-        cout << lastname2 << " earned less than 1000\n";
-        foundLess1000 = true;
-    }
-    if (!foundLess1000) 
-    {
-        cout << "None earned less than 1000\n";
-    }
-
-    bool foundTaxOver50 = false;
-    if (tax1 > 50) 
-    {
-        cout << lastname1[0] << '-' << lastname1[lastname1.length()-1] << " has tax more than 50\n";
-        foundTaxOver50 = true;
-    }
-    if (tax2 > 50) 
-    {
-        cout << lastname2[0] << '-' << lastname2[lastname2.length()-1] << " has tax more than 50\n";
-        foundTaxOver50 = true;
-    }
-    if (!foundTaxOver50) 
-    {
-        cout << "None has tax more than 50\n";
-    }
-
-    return 0;
+	return 0;
 }

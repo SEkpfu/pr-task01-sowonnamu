@@ -1,82 +1,58 @@
-#include <iostream>
-#include <cmath>
+#include<iostream>
+#include <vector>
+#include <string>
 
-int main ()
-{   
-    using namespace std;
+using namespace std;
 
-    constexpr double INCOMETAX = 13.0/100.0;
+void vvod(int& h, int& st, double& pr, double& n_st, int& i) {
+	cout << "Введите данные" << i + 1 << " работника : часы, ставка, премия, процент налога." << endl;
+	cin >> h >> st >> pr >> n_st;
+}
+double zp(int h, int st, double pr){
+	int ob_zp = h * st;
+	return ob_zp + ob_zp * pr/100;
+}
+double nalog(double zp_b, double n_st) {
+	return n_st / 100 * zp_b;
+ }
+double na_ruki(int h, int st, double pr, double n_st) {
+	double zp_bez_nal = zp(h, st, pr);
+	return zp_bez_nal - nalog(zp_bez_nal, n_st);
+}
+int main() {
+	
+	int h, st;
+	double pr, n_st;
+	int kolvo, max_n = 0, min_n = 0, kol50k = 0;
+	double max_zp = 0.0, min_zp = 99999999.9, ob_nalog = 0.0;
+	string nomer;
+	cout << " Введите количество работников." << endl;
+	cin >> kolvo;
+	vector<double> zarp(kolvo), zp_nr(kolvo), nal(kolvo);
+	for (int i = 0; i < kolvo; ++i) {
+		vvod(h, st, pr, n_st, i);
+		zarp[i] = zp(h, st, pr);
+		zp_nr[i] = na_ruki(h, st, pr, n_st);
+		nal[i] = nalog(zp_nr[i], n_st);
+		if (max_zp < zarp[i]) {
+			max_zp = zarp[i];
+			max_n = i + 1;
+		}
+		if (min_zp > zarp[i]) {
+			min_zp = zarp[i];
+			min_n = i + 1;
+		}
+		if (zp_nr[i] > 50000) {
+			kol50k += 1;
+			nomer += " " + to_string(i + 1);
+		}
+		ob_nalog += nal[i];
+	}
+	cout << min_n << endl << max_zp << " " << max_n << endl;
+	cout << kol50k << nomer << endl << ob_nalog;
 
-    int workers;
-    cout << "How much of workers: ";
-    cin >> workers;
 
-    double hours[workers] = {};
-    double payments[workers] = {};
-    double salaries[workers] = {};
-    double taxes[workers] = {};
 
-    for (int i = 0; i < workers; i++)
-    {
-        cout << "Workers " << i+1 << " hours: ";
-        cin >> hours[i];
-        cout << "Workers " << i+1 << " payment: ";
-        cin >> payments[i];
-    }
 
-    for (int i = 0; i < workers; i++)
-    {
-        double salary = hours[i]*payments[i];
-        double tax = salary*INCOMETAX;
-        
-        salaries[i] = salary - tax;
-        taxes[i] = tax;
-    }
-
-    double totalTax = 0, minSalary = salaries[0], maxSalary = salaries[0];
-    int minNum = workers, maxNum = 1, more50000Qnt = 0; 
-
-    for (int i = 0; i < workers; i++)
-    {
-        totalTax += taxes[i];
-
-        if (salaries[i] > maxSalary)
-        {
-            maxSalary = salaries[i];
-            maxNum = i+1;
-        }
-        if (salaries[i] < minSalary)
-        {
-            minSalary = salaries[i];
-            minNum = i+1;
-        }
-        if (salaries[i] > 50000)
-        {
-            more50000Qnt += 1;
-        }
-    }   
-
-    cout << "--------------------------" << endl;
-    cout << "Worker " << minNum << " earned the least" << endl;
-    cout << "Worker " << maxNum << " earned the most (" << maxSalary << ")" << endl;
-
-    if (more50000Qnt > 0)
-    {   
-        cout << more50000Qnt << " worker or workers earnes more than 50000: ";
-        for (int i = 0; i < workers; i++)
-        {
-            if (salaries[i] > 50000)
-            {
-                cout << i+1 << " ";
-            }
-        }
-        cout << endl;
-    } 
-    else
-    {
-        cout << "None earned more than 50000" << endl;
-    }
-    cout << "Total tax sum is " << totalTax;
-
-    return 0;
+	return 0;
 }

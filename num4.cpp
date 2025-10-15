@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-void inputWorkerData (float &hoursWorked, float &hourlyPayment, float &premiumPercentage)
+void inputWorkerData (double &hoursWorked, double &hourlyPayment, double &premiumPercentage)
 {
     cout << "Hours worked: ";
     cin >> hoursWorked;
@@ -13,22 +13,27 @@ void inputWorkerData (float &hoursWorked, float &hourlyPayment, float &premiumPe
     cin >> premiumPercentage;
 }
 
-void calculateSalaryData(float hours, float payment, float premium, 
-                        float &totalSum, float &incomeTax, float &realSalary)                                      
+void calculateSalaryData(double hours, double payment, double premium, 
+                        double &totalSum, double &incomeTax, double &realSalary)                                      
 {
     totalSum = hours * payment + (hours*payment*premium)/100.0;
-    incomeTax = (totalSum*13)/100.0;
+    incomeTax = totalSum * (13.0/100.0);
     realSalary = totalSum - incomeTax;
 }
 
 int main()
 {
-    float hoursWorked, hourlyPayment, premiumPercentage;
+    double hoursWorked, hourlyPayment, premiumPercentage, totalSum, incomeTax, realSalary;
     inputWorkerData(hoursWorked, hourlyPayment, premiumPercentage);
 
-    float totalSum, incomeTax, realSalary;
-    calculateSalaryData(hoursWorked, hourlyPayment, premiumPercentage, 
-                        totalSum, incomeTax, realSalary);
+    calculateSalaryData(
+        hoursWorked, 
+        hourlyPayment, 
+        premiumPercentage, 
+        totalSum, 
+        incomeTax, 
+        realSalary
+    );
     
     cout << "earned: " << totalSum << endl;
     cout << "income tax: " << incomeTax << endl; 
